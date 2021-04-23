@@ -161,14 +161,14 @@ class Main extends eui.UILayer {
         button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
 
         // 直接跳转首页
-        this.goOtherPage()
+        this.goOtherPageHome()
     }
 
     /**
    * 点击按钮，转场
    * Click the button
    */
-    private goOtherPage(e: egret.TouchEvent) {
+    private goOtherPageHome() {
         let gameStart: Home = new Home();
         //显示第一个场景
         SceneManager.Instance.changeScene(gameStart);

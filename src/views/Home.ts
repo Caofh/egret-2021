@@ -66,7 +66,7 @@ class Home extends eui.UILayer {
     const userInfo = await platform.getUserInfo();
     console.log(userInfo);
 
-    // 请求接口
+    // 请求接口示例
     this.httpReq()
 
   }
@@ -232,31 +232,19 @@ class Home extends eui.UILayer {
   }
 
   private httpReq() {
-    let url = 'https://tpdoc.cn/api_2020/tpCli/user/getMeInfo?test=1'
+    new CallApi(this,'https://tpdoc.cn/api_2020/tpCli/user/getMeInfo', {
+      test: 1
+    }, 'get',  (event:egret.Event) => {
 
-    var request = new egret.HttpRequest();
-    request.responseType = egret.HttpResponseType.TEXT;
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.open(url, egret.HttpMethod.GET);
-    request.send('');
+      var request = event.currentTarget;
+      const data = JSON.parse(request.response)
+      console.log(data)
 
-    request.addEventListener(egret.Event.COMPLETE, (event: egret.Event) => {
-
-      console.log(123)
-      console.log(JSON.parse(request.response))
-
-      if (!request.response) {
-        console.log("error " + url);
-        return;
-      }
-      var reqObj = JSON.parse(request.response);
-    }, this);
-    request.addEventListener(egret.IOErrorEvent.IO_ERROR, () => {
-      console.log("get error : " + event);
-    }, this);
-    request.addEventListener(egret.ProgressEvent.PROGRESS, (event: egret.ProgressEvent) => {
-      console.log("get progress : " + Math.floor(100 * event.bytesLoaded / event.bytesTotal) + "%");
-    }, this);
+    }, () => {
+      console.log('error')
+    }, () => {
+      console.log('progress')
+    });
   }
 
   /**
